@@ -1,11 +1,151 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Graphic Design — Portfolio">
+  <div class="page-header">
+    <h1 class="page-title">Graphic Design</h1>
+  </div>
+
+  <div class="projects-container">
+    <!-- Project Card Template -->
+    <a href="/project-title" class="project-card">
+      <div class="project-image-placeholder">
+        <!-- SVG Placeholder image -->
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <rect width="100" height="100" fill="#d1d5db" />
+          <path d="M30 70 L50 40 L70 70 Z" fill="#9ca3af" />
+          <circle cx="70" cy="30" r="10" fill="#9ca3af" />
+        </svg>
+      </div>
+      <div class="project-info">
+        <h2 class="project-title">Project Title</h2>
+        <p class="project-subtitle">View Project &rarr;</p>
+      </div>
+    </a>
+    
+    <!-- A second card just to show the list format -->
+    <a href="/brand-identity" class="project-card">
+      <div class="project-image-placeholder">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <rect width="100" height="100" fill="#d1d5db" />
+          <path d="M30 70 L50 40 L70 70 Z" fill="#9ca3af" />
+          <circle cx="70" cy="30" r="10" fill="#9ca3af" />
+        </svg>
+      </div>
+      <div class="project-info">
+        <h2 class="project-title">Brand Identity</h2>
+        <p class="project-subtitle">View Project &rarr;</p>
+      </div>
+    </a>
+
+    <!-- Daily Poster Project Card -->
+    <a href="/daily-poster" class="project-card">
+      <div class="project-image-placeholder">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <rect width="100" height="100" fill="#d1d5db" />
+          <path d="M30 70 L50 40 L70 70 Z" fill="#9ca3af" />
+          <circle cx="70" cy="30" r="10" fill="#9ca3af" />
+        </svg>
+      </div>
+      <div class="project-info">
+        <h2 class="project-title">Daily Poster</h2>
+        <p class="project-subtitle">View Project &rarr;</p>
+      </div>
+    </a>
+  </div>
 </Layout>
+
+<style>
+  .page-header {
+    padding: 40px;
+    margin-bottom: 0;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+    letter-spacing: -0.02em;
+    text-align: right; /* Move title out of the way of the nav bar for full bleed */
+  }
+
+  .projects-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .project-card {
+    display: flex;
+    align-items: stretch;
+    width: 100%; /* Spans the entire page */
+    min-height: 50vh; /* Make them decently tall */
+    background-color: #f5f5f5; /* Light grey */
+    text-decoration: none;
+    overflow: hidden;
+    transition: background-color 0.2s ease;
+  }
+
+  /* Hover effect: background changes to darker grey */
+  .project-card:hover {
+    background-color: #e5e5e5; /* Grey */
+  }
+
+  /* Left side: Image */
+  .project-image-placeholder {
+    width: 40%;
+    background-color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .project-image-placeholder svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Right side: Text */
+  .project-info {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .project-title {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .project-subtitle {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+  }
+
+  /* Responsive layout for smaller screens */
+  @media (max-width: 1024px) {
+    .project-card {
+      width: 80%;
+    }
+  }
+  @media (max-width: 768px) {
+    .project-card {
+      width: 100%;
+      min-width: 0;
+      flex-direction: column; /* Stack image on top of text on mobile */
+    }
+    .project-image-placeholder {
+      width: 100%;
+      height: 200px;
+    }
+  }
+</style>

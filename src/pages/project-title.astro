@@ -1,0 +1,100 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Project Title — Portfolio">
+  <div class="project-detail-container">
+    <div class="project-header">
+      <h1 class="project-title">Project Title</h1>
+    </div>
+
+    <div class="project-content">
+      <!-- Large placeholder image for the specific project -->
+      <div class="hero-image-placeholder">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <rect width="100" height="100" fill="#d1d5db" />
+          <path d="M20 80 L50 40 L80 80 Z" fill="#9ca3af" />
+          <circle cx="80" cy="20" r="12" fill="#9ca3af" />
+        </svg>
+      </div>
+      
+      <div class="project-description">
+        <h2>About the Project</h2>
+        <p>This is the detailed view for "Project Title". Here you can elaborate on the creative process, the client's needs, and the design solutions you implemented. You can replace these SVG placeholders with actual `<img>` tags once you have exported your work.</p>
+        <p>Notice how clicking the card on the previous page dynamically loaded this detailed case study view.</p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .project-detail-container {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 100px; /* Space for the floating nav bar */
+    padding-bottom: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 30px;
+    color: #666;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .back-link:hover {
+    color: #000;
+    transform: translateX(-4px);
+  }
+
+  .project-header {
+    margin-bottom: 40px;
+  }
+
+  .project-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+    color: #111;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-image-placeholder {
+    width: 100%;
+    height: 450px;
+    background-color: #e5e7eb;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+
+  .hero-image-placeholder svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-description {
+    max-width: 700px;
+  }
+
+  .project-description h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: #222;
+  }
+
+  .project-description p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 20px;
+  }
+</style>

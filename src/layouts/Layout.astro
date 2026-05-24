@@ -1,23 +1,71 @@
+---
+// Import your universal navigation component
+import Navigation from '../components/Navigation.astro';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<meta name="description" content="Portfolio" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<main class="portfolio-container">
+			<!-- Your menu lives here permanently -->
+			<nav class="sidebar">
+				<Navigation />
+			</nav>
+			
+			<!-- This slot dynamically injects the unique content of each page -->
+			<section class="content-view">
+				<slot />
+			</section>
+		</main>
 	</body>
 </html>
 
-<style>
-	html,
-	body {
+<style is:global>
+	/* Global CSS foundations */
+	html, body {
 		margin: 0;
+		padding: 0;
 		width: 100%;
 		height: 100%;
+		background-color: #fafafa;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	}
+
+	.portfolio-container {
+		display: flex;
+		width: 100%;
+		min-height: 100vh;
+	}
+
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		display: flex;
+		align-items: flex-start; /* Aligns the menu to the top */
+		padding-left: 40px;
+		padding-top: 40px; /* Provides space from the top edge */
+	}
+
+	.content-view {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		padding: 0;
 	}
 </style>

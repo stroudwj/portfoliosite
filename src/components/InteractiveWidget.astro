@@ -1,0 +1,219 @@
+---
+// src/components/InteractiveWidget.astro
+---
+<div id="art-container">
+  <img src="https://i.imgur.com/eeh5fmJ.png" class="layer" id="bg">
+  
+  <div id="pupils-container">
+    <img src="https://i.imgur.com/qnVrDsf.png" class="pupil" id="left-pupil">
+    <img src="https://i.imgur.com/LCnMU8e.png" class="pupil" id="right-pupil">
+  </div>
+
+  <img src="https://i.imgur.com/yoN2UzZ.png" class="layer emotion active" id="state-open">
+  <img src="https://i.imgur.com/Np1dVqh.png" class="layer emotion" id="state-happy">
+  <img src="https://i.imgur.com/NXkxAYV.png" class="layer emotion" id="state-very-happy">
+  <img src="https://i.imgur.com/zfIfhzr.png" class="layer emotion" id="state-blink">
+
+  <img src="https://i.imgur.com/cNMShe5.png" class="layer" id="top-face">
+</div>
+
+<style>
+  #art-container {
+    position: relative;
+    height: 100vh; /* Takes up the entire vertical screen */
+    max-height: 100vh;
+    aspect-ratio: 4 / 5;
+    margin-left: auto; /* Pushes everything to the right, leaving left blank */
+    margin-right: 0;
+    overflow: hidden;
+    cursor: crosshair;
+  }
+
+  .layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  #top-face {
+    pointer-events: auto;
+  }
+  #state-open {
+    margin-top: .25px;
+    margin-left: -.21px;
+  }
+  #state-blink {
+    margin-top: .1px;
+    margin-left: 0px;
+  }
+  .emotion {
+    opacity: 0;
+  }
+
+  .emotion.active {
+    opacity: 1;
+  }
+
+  .pupil {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    width: 4.65%;
+  }
+
+  #left-pupil { left: 48.9%; top: 44%; }
+  #right-pupil { left: 71.5%; top: 44%; }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('art-container');
+    const leftPupil = document.getElementById('left-pupil');
+    const rightPupil = document.getElementById('right-pupil');
+
+    if (!container || !leftPupil || !rightPupil) return;
+
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    let idleTimeout;
+
+    function resetIdleTimer() {
+      clearTimeout(idleTimeout);
+      idleTimeout = setTimeout(() => {
+        leftPupil.style.transform = `translate(-50%, -50%)`;
+        rightPupil.style.transform = `translate(-50%, -50%)`;
+
+        if (!isBlinking) {
+          isBlinking = true;
+          const previousState = states[currentIndex];
+          
+          showState('blink');
+          
+          setTimeout(() => {
+            showState(previousState);
+            isBlinking = false;
+          }, 150);
+        }
+      }, 5000);
+    }
+
+    function updatePupils(mouseX, mouseY) {
+      const rect = container.getBoundingClientRect();
+      
+      let currentYPercent = 0.44;
+      let radiusX = rect.width * 0.035;
+      let radiusY = rect.width * 0.015;
+
+      if (states[currentIndex] === 'happy') {
+        radiusX = rect.width * 0.025;
+        radiusY = rect.width * 0.010;
+        currentYPercent = 0.43;
+      } else if (states[currentIndex] === 'very-happy') {
+        radiusX = rect.width * 0.015;
+        radiusY = rect.width * 0.005;
+        currentYPercent = .43;
+      }
+      
+      leftPupil.style.top = `${currentYPercent * 100}%`;
+      rightPupil.style.top = `${currentYPercent * 100}%`;
+      
+      const leftEyeCenter = { x: rect.width * 0.489, y: rect.height * currentYPercent };
+      const rightEyeCenter = { x: rect.width * 0.715, y: rect.height * currentYPercent };
+
+      movePupil(leftPupil, leftEyeCenter, mouseX, mouseY, radiusX, radiusY);
+      movePupil(rightPupil, rightEyeCenter, mouseX, mouseY, radiusX, radiusY);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      lastMouseX = e.clientX - rect.left;
+      lastMouseY = e.clientY - rect.top;
+      
+      updatePupils(lastMouseX, lastMouseY);
+      resetIdleTimer();
+    });
+
+    function movePupil(pupil, center, mouseX, mouseY, rx, ry) {
+      const dx = mouseX - center.x;
+      const dy = mouseY - center.y;
+      
+      const angle = Math.atan2(dy, dx);
+      const maxDistance = (rx * ry) / Math.sqrt((ry * Math.cos(angle))**2 + (rx * Math.sin(angle))**2);
+      const actualDistance = Math.min(Math.sqrt(dx*dx + dy*dy), maxDistance);
+      
+      const moveX = actualDistance * Math.cos(angle);
+      const moveY = actualDistance * Math.sin(angle);
+      
+      pupil.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+    }
+
+    const states = ['open', 'happy', 'very-happy'];
+    let currentIndex = 0;
+    let direction = 1;
+    let isBlinking = false;
+
+    function showState(stateName) {
+      document.querySelectorAll('.emotion').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById(`state-${stateName}`);
+      if(target) target.classList.add('active');
+    }
+
+    container.addEventListener('click', () => {
+      if (isBlinking) return;
+      currentIndex += direction;
+      if (currentIndex === states.length - 1) direction = -1;
+      if (currentIndex === 0) direction = 1;
+      
+      showState(states[currentIndex]);
+      updatePupils(lastMouseX, lastMouseY);
+      resetIdleTimer();
+    });
+
+    function scheduleNextBlink() {
+      const waitTime = Math.floor(Math.random() * 4500) + 2500;
+
+      setTimeout(() => {
+        if (!isBlinking) {
+          isBlinking = true;
+          
+          const isDoubleBlink = Math.random() < 0.25;
+          const blinkDuration = 150;
+          const blinkGap = 100;
+
+          const previousState = states[currentIndex];
+
+          showState('blink');
+          
+          setTimeout(() => {
+            showState(previousState);
+            
+            if (isDoubleBlink) {
+              setTimeout(() => {
+                showState('blink');
+                
+                setTimeout(() => {
+                  showState(previousState);
+                  isBlinking = false;
+                  scheduleNextBlink();
+                }, blinkDuration);
+                
+              }, blinkGap);
+            } else {
+              isBlinking = false;
+              scheduleNextBlink();
+            }
+          }, blinkDuration);
+        } else {
+          setTimeout(() => scheduleNextBlink(), 1000);
+        }
+      }, waitTime);
+    }
+
+    scheduleNextBlink();
+    resetIdleTimer();
+  });
+</script>
