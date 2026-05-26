@@ -42,13 +42,14 @@ posters.sort((a, b) => b.num - a.num);
         <div class="poster-item">
           {poster.path.endsWith('.gif') ? (
             <!-- Standard HTML img for GIFs to preserve animation and avoid optimization crashes -->
-            <img src={poster.src.src} alt={`Daily Poster ${poster.num}`} loading="lazy" />
+            <img src={poster.src.src} alt={`Daily Poster ${poster.num}`} loading="lazy" data-full-src={poster.src.src} />
           ) : (
             <!-- Astro's optimized Image component for static images -->
             <Image 
               src={poster.src} 
               alt={`Daily Poster ${poster.num}`} 
               width={800} 
+              data-full-src={poster.src.src}
             />
           )}
         </div>
@@ -61,6 +62,12 @@ posters.sort((a, b) => b.num - a.num);
         </p>
       )}
     </div>
+  </div>
+
+  <!-- Full-screen Modal -->
+  <div id="image-modal" class="modal">
+    <span class="close-btn">&times;</span>
+    <img id="modal-img" src="" alt="Full resolution poster" />
   </div>
 </Layout>
 
@@ -121,6 +128,7 @@ posters.sort((a, b) => b.num - a.num);
     display: block;
     background-color: #f0f0f0; 
     border-radius: 4px; 
+    cursor: pointer;
   }
 
   /* Mobile Layout */
@@ -145,4 +153,96 @@ posters.sort((a, b) => b.num - a.num);
       padding-top: 0;
     }
   }
-</style>>
+
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal.show {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    object-fit: contain;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    z-index: 1001;
+  }
+
+  .close-btn:hover {
+    color: #ccc;
+  }
+</style>
+
+<script>
+  function setupLightbox() {
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeBtn = document.querySelector('.close-btn');
+    const images = document.querySelectorAll('.poster-item img');
+
+    if (!modal || !modalImg || !closeBtn) return;
+
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        const fullSrc = img.getAttribute('data-full-src');
+        if (fullSrc) {
+          modalImg.src = fullSrc;
+          modal.classList.add('show');
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+      });
+    });
+
+    const closeModal = () => {
+      modal.classList.remove('show');
+      document.body.style.overflow = ''; // Restore scrolling
+      setTimeout(() => { modalImg.src = ''; }, 300); // Clear after fade out
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    
+    // Close when clicking outside the image
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('show')) {
+        closeModal();
+      }
+    });
+  }
+
+  // Initialize on DOM load and Astro view transitions
+  document.addEventListener('DOMContentLoaded', setupLightbox);
+  document.addEventListener('astro:page-load', setupLightbox);
+</script>>
