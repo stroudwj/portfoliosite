@@ -1,12 +1,15 @@
 ---
 // Import your universal navigation component
 import Navigation from '../components/Navigation.astro';
+import { Image } from 'astro:assets';
+import headerLogo from '../assets/header/will3black.png';
 
 interface Props {
 	title: string;
+	showLogo?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, showLogo = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -19,6 +22,13 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
+		{showLogo && (
+			<div class="header-logo-container">
+				<a href="/">
+					<Image src={headerLogo} alt="Will Stroud Logo" class="header-logo" />
+				</a>
+			</div>
+		)}
 		<main class="portfolio-container">
 			<!-- Your menu lives here permanently -->
 			<nav class="sidebar">
@@ -67,5 +77,29 @@ const { title } = Astro.props;
 		flex-direction: column;
 		width: 100%;
 		padding: 0;
+	}
+
+	.header-logo-container {
+		position: absolute;
+		top: 40px; /* Align with sidebar padding-top */
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 1000;
+		pointer-events: auto; /* So the link is clickable */
+	}
+
+	.header-logo {
+		height: 100px;
+		width: auto;
+		display: block;
+	}
+
+	@media (max-width: 768px) {
+		.header-logo-container {
+			top: 20px;
+		}
+		.header-logo {
+			height: 35px;
+		}
 	}
 </style>

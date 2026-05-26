@@ -7,7 +7,7 @@ const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/art
 const images = Object.values(imageFiles).map(file => file.default);
 ---
 
-<Layout title="Art — Portfolio">
+<Layout title="Art — Portfolio" showLogo={true}>
   <div class="page-content-wrapper">
     <h2>Fine Art</h2>
     <p>Paintings and drawings from 2025-2026</p>

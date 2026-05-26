@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Astrobloc — Portfolio" showLogo={true}>
+  <div class="page-content-wrapper">
+    <h1 class="project-title">Astrobloc</h1>
+    <p>Project details coming soon...</p>
+  </div>
+</Layout>
+
+<style>
+  .page-content-wrapper {
+    padding: 150px 40px 40px;
+  }
+  .project-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 768px) {
+    .page-content-wrapper {
+      padding-top: 80px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+</style>

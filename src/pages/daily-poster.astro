@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import InteractiveWidget from '../components/InteractiveWidget.astro';
 
 // Automatically grabs every image in the daily-poster folder
-const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/daily-poster/*.{jpg,jpeg,png,webp,gif}', { eager: true });
+const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/graphic-design/daily-poster/*.{jpg,jpeg,png,webp,gif}', { eager: true });
 
 // Process the files into an array we can sort
 const posters = Object.entries(imageFiles).map(([path, module]) => {
@@ -58,7 +58,7 @@ posters.sort((a, b) => b.num - a.num);
       <!-- Show a placeholder message if the folder is empty -->
       {posters.length === 0 && (
         <p style="grid-column: 1 / -1; color: #666;">
-          Images will appear here once placed in <code>src/assets/daily-poster/</code>.
+          Images will appear here once placed in <code>src/assets/graphic-design/daily-poster/</code>.
         </p>
       )}
     </div>

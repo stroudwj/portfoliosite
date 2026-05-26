@@ -2,23 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 
-// Load some art and poster images for the collage
-const artFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/art/*.{jpeg,jpg,png,gif,webp}', { eager: true });
-const posterFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/daily-poster/*.{jpeg,jpg,png,gif,webp}', { eager: true });
-
-const artImages = Object.values(artFiles).map(file => file.default).slice(0, 6);
-const posterImages = Object.values(posterFiles).map(file => file.default).slice(0, 6);
-
-// Interleave them for the collage
-const collageImages = [];
-const maxLength = Math.max(artImages.length, posterImages.length);
-for (let i = 0; i < maxLength; i++) {
-  if (artImages[i]) collageImages.push(artImages[i]);
-  if (posterImages[i]) collageImages.push(posterImages[i]);
-}
+// Load images for the home page collage from the dedicated selected-works folder
+const selectedWorksFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/selected-works/*.{jpeg,jpg,png,gif,webp}', { eager: true });
+const collageImages = Object.values(selectedWorksFiles).map(file => file.default);
 ---
 
-<Layout title="Home — Portfolio">
+<Layout title="Home — Portfolio" showLogo={true}>
   <div class="page-header">
     <h1 class="page-title">Selected Works</h1>
   </div>
