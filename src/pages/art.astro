@@ -8,7 +8,7 @@ const images = Object.values(imageFiles).map(file => file.default);
 ---
 
 <Layout title="Art — Portfolio">
-  <div style="padding: 150px 40px 40px;">
+  <div class="page-content-wrapper">
     <h2>Fine Art</h2>
     <p>Paintings and drawings from 2025-2026</p>
 
@@ -29,6 +29,21 @@ const images = Object.values(imageFiles).map(file => file.default);
 </Layout>
 
 <style>
+  .page-content-wrapper {
+    padding: 150px 40px 40px; /* Default desktop padding */
+  }
+
+  @media (max-width: 768px) {
+    .page-content-wrapper {
+      padding-top: 80px; /* Mobile specific top padding */
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 40px;
+    }
+  }
+
+  /* ... rest of your styles ... */
+
   .dev-note {
     font-size: 0.9rem;
     color: #666;
@@ -106,7 +121,6 @@ const images = Object.values(imageFiles).map(file => file.default);
   .modal img {
     max-width: 90vw;
     max-height: 90vh;
-    border-radius: 4px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     object-fit: contain;
   }

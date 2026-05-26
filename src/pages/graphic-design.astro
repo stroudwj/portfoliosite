@@ -1,5 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import reachoutThumb from '../assets/reachout/thumbnails/thumbnail.jpg';
+import astroblocThumb from '../assets/astrobloc/thumbnails/thumbnail.jpg';
+import dailyPosterThumb from '../assets/daily-poster/thumbnails/thumbnail.jpg';
+import fliersThumb from '../assets/fliers/thumbnails/thumbnail.jpg';
+import miscellaneousThumb from '../assets/miscellaneous/thumbnails/thumbnail.jpg';
 ---
 
 <Layout title="Graphic Design — Portfolio">
@@ -8,48 +14,52 @@ import Layout from '../layouts/Layout.astro';
   </div>
 
   <div class="projects-container">
-    <!-- Project Card Template -->
-    <a href="/project-title" class="project-card">
+    <a href="/reachout" class="project-card">
       <div class="project-image-placeholder">
-        <!-- SVG Placeholder image -->
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-          <rect width="100" height="100" fill="#d1d5db" />
-          <path d="M30 70 L50 40 L70 70 Z" fill="#9ca3af" />
-          <circle cx="70" cy="30" r="10" fill="#9ca3af" />
-        </svg>
+        <Image src={reachoutThumb} alt="Reachout Thumbnail" />
       </div>
       <div class="project-info">
-        <h2 class="project-title">willreplace</h2>
+        <h2 class="project-title">Reachout</h2>
         <p class="project-subtitle">View Project &rarr;</p>
       </div>
     </a>
     
-    <!-- A second card just to show the list format -->
-    <a href="/brand-identity" class="project-card">
+    <a href="/astrobloc" class="project-card">
       <div class="project-image-placeholder">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-          <rect width="100" height="100" fill="#d1d5db" />
-          <path d="M30 70 L50 40 L70 70 Z" fill="#9ca3af" />
-          <circle cx="70" cy="30" r="10" fill="#9ca3af" />
-        </svg>
+        <Image src={astroblocThumb} alt="Astrobloc Thumbnail" />
       </div>
       <div class="project-info">
-        <h2 class="project-title">Brand Identity</h2>
+        <h2 class="project-title">Astrobloc</h2>
         <p class="project-subtitle">View Project &rarr;</p>
       </div>
     </a>
 
-    <!-- Daily Poster Project Card -->
     <a href="/daily-poster" class="project-card">
       <div class="project-image-placeholder">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-          <rect width="100" height="100" fill="#d1d5db" />
-          <path d="M30 70 L50 40 L70 70 Z" fill="#9ca3af" />
-          <circle cx="70" cy="30" r="10" fill="#9ca3af" />
-        </svg>
+        <Image src={dailyPosterThumb} alt="Daily Poster Thumbnail" />
       </div>
       <div class="project-info">
         <h2 class="project-title">Daily Poster</h2>
+        <p class="project-subtitle">View Project &rarr;</p>
+      </div>
+    </a>
+
+    <a href="/fliers" class="project-card">
+      <div class="project-image-placeholder">
+        <Image src={fliersThumb} alt="Fliers Thumbnail" />
+      </div>
+      <div class="project-info">
+        <h2 class="project-title">Fliers</h2>
+        <p class="project-subtitle">View Project &rarr;</p>
+      </div>
+    </a>
+
+    <a href="/miscellaneous" class="project-card">
+      <div class="project-image-placeholder">
+        <Image src={miscellaneousThumb} alt="Miscellaneous Thumbnail" />
+      </div>
+      <div class="project-info">
+        <h2 class="project-title">Miscellaneous</h2>
         <p class="project-subtitle">View Project &rarr;</p>
       </div>
     </a>
@@ -58,7 +68,7 @@ import Layout from '../layouts/Layout.astro';
 
 <style>
   .page-header {
-    padding: 40px;
+    padding: 60px;
     margin-bottom: 0;
   }
   
@@ -72,16 +82,16 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .projects-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     width: 100%;
   }
 
   .project-card {
     display: flex;
     align-items: stretch;
-    width: 100%; /* Spans the entire page */
-    min-height: 50vh; /* Make them decently tall */
+    width: 100%;
+    min-height: 40vh; /* Make them decently tall */
     background-color: #f5f5f5; /* Light grey */
     text-decoration: none;
     overflow: hidden;
@@ -102,7 +112,7 @@ import Layout from '../layouts/Layout.astro';
     justify-content: center;
   }
 
-  .project-image-placeholder svg {
+  .project-image-placeholder img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -133,19 +143,18 @@ import Layout from '../layouts/Layout.astro';
 
   /* Responsive layout for smaller screens */
   @media (max-width: 1024px) {
-    .project-card {
-      width: 80%;
+    .projects-container {
+      grid-template-columns: 1fr;
     }
   }
   @media (max-width: 768px) {
     .project-card {
       width: 100%;
       min-width: 0;
-      flex-direction: column; /* Stack image on top of text on mobile */
+      min-height: 25vh;
     }
-    .project-image-placeholder {
-      width: 100%;
-      height: 200px;
+    .project-info {
+      padding: 20px;
     }
   }
 </style>
