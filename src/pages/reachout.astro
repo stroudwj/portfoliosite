@@ -1,28 +1,206 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+// Automatically import all images in the src/assets/graphic-design/reachout/images/ folder
+const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/graphic-design/reachout/images/*.{jpeg,jpg,png,gif,webp}', { eager: true });
+const imagesWithPaths = Object.entries(imageFiles).map(([path, file]) => ({ path, img: file.default }));
 ---
 
 <Layout title="Reachout — Portfolio" showLogo={true}>
   <div class="page-content-wrapper">
-    <h1 class="project-title">Reachout</h1>
-    <p>Project details coming soon...</p>
+    
+    <div class="image-grid">
+      {imagesWithPaths.map(({ img }) => (
+        <div class="grid-item">
+          <Image 
+            src={img} 
+            alt="Reachout piece" 
+            width={600} 
+            class="lightbox-trigger"
+            data-full-src={img.src} 
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div id="image-modal" class="modal" role="dialog" aria-hidden="true">
+    <span class="close-btn">&times;</span>
+    <img id="modal-img" src="" alt="Full resolution Reachout piece" />
   </div>
 </Layout>
 
 <style>
   .page-content-wrapper {
-    padding: 150px 40px 40px;
+    padding: 200px 40px 40px; /* Default desktop padding */
+    max-width: 1600px;
+    margin: 0 auto;
   }
+
   .project-title {
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
+
   @media (max-width: 768px) {
     .page-content-wrapper {
       padding-top: 80px;
       padding-left: 20px;
       padding-right: 20px;
+      padding-bottom: 40px;
     }
   }
+
+  /* Fixed Grid for strict Left-to-Right order */
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    align-items: start; 
+  }
+
+  @media (min-width: 640px) {
+    .image-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .image-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .image-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .grid-item {
+    width: 100%;
+    display: block;
+  }
+
+  .grid-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+    cursor: zoom-in;
+  }
+
+  .grid-item img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Lightbox Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .modal.show {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal img {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    object-fit: contain;
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .modal.show img {
+    transform: scale(1);
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 44px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    z-index: 10000;
+    user-select: none;
+  }
+
+  .close-btn:hover {
+    color: #fff;
+    transform: scale(1.1);
+  }
 </style>
+
+<script>
+  function setupLightbox() {
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img') as HTMLImageElement | null;
+    const closeBtn = document.querySelector('.close-btn');
+    const triggers = document.querySelectorAll('.lightbox-trigger');
+
+    if (!modal || !modalImg || !closeBtn) return;
+
+    const openModal = (src: string) => {
+      modalImg.src = src;
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      setTimeout(() => { 
+        if (!modal.classList.contains('show')) modalImg.src = ''; 
+      }, 300);
+    };
+
+    triggers.forEach(img => {
+      img.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLImageElement;
+        const fullSrc = target.getAttribute('data-full-src');
+        if (fullSrc) openModal(fullSrc);
+      });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('show')) closeModal();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupLightbox);
+  document.addEventListener('astro:page-load', setupLightbox);
+</script>

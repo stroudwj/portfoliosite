@@ -8,8 +8,8 @@ const currentPath = Astro.url.pathname;
   <a href="/" class={`dock-link ${currentPath === '/' ? 'active' : ''}`}><span class="dock-item">Home</span></a>
   <a href="/art" class={`dock-link ${currentPath === '/art' || currentPath === '/art/' ? 'active' : ''}`}><span class="dock-item">Art</span></a>
   <a href="/graphic-design" class={`dock-link ${currentPath === '/graphic-design' || currentPath === '/graphic-design/' ? 'active' : ''}`}><span class="dock-item">Graphic Design</span></a>
-  <a href="/bio" class={`dock-link ${currentPath === '/bio' || currentPath === '/bio/' ? 'active' : ''}`}><span class="dock-item">Bio</span></a>
   <a href="/photography" class={`dock-link ${currentPath === '/photography' || currentPath === '/photography/' ? 'active' : ''}`}><span class="dock-item">Photography</span></a>
+  <a href="/bio" class={`dock-link ${currentPath === '/bio' || currentPath === '/bio/' ? 'active' : ''}`}><span class="dock-item">About</span></a>
 </div>
 
 <style>
@@ -17,7 +17,7 @@ const currentPath = Astro.url.pathname;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 15px 5px; /* 15px top/bottom, 5px left/right */
+  padding: 5px 5px; /* top/bottom, left/right */
   background: transparent;
 }
 
