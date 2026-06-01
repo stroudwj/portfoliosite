@@ -7,7 +7,7 @@ const selectedWorksFiles = import.meta.glob<{ default: ImageMetadata }>('/src/as
 const collageImages = Object.values(selectedWorksFiles).map(file => file.default);
 ---
 
-<Layout title="Home — Portfolio" showLogo={true}>
+<Layout title="Will Stroud" showLogo={true}>
   <div class="page-header">
     <h1 class="page-title">Selected Works</h1>
   </div>
