@@ -3,9 +3,12 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Bio — About Me" showLogo={true}>
-  <div style="padding: 180px 40px 40px; display: flex; justify-content: center;">
-    <p style="max-width: 500px; text-align: center; line-height: 1.6; text-wrap: pretty;">
+  <div style="padding: 180px 40px 40px; display: flex; flex-direction: column; align-items: center; gap: 24px;">
+    <p style="max-width: 500px; text-align: center; line-height: 1.6; text-wrap: pretty; margin: 0;">
       William "Will" Stroud is a 22 year old passionate creative with a strong desire to create all things beautiful and share it with the world.
     </p>
+    <a href="mailto:william.stroud100@gmail.com" style="padding: 12px 24px; background-color: #000; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 500; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+      Get in Touch
+    </a>
   </div>
 </Layout>
