@@ -4,7 +4,9 @@ import { Image } from 'astro:assets';
 
 // Automatically import all images in the src/assets/photography/ folder
 const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/photography/*.{jpeg,jpg,png,gif,webp}', { eager: true });
-const imagesWithPaths = Object.entries(imageFiles).map(([path, file]) => ({ path, img: file.default }));
+const imagesWithPaths = Object.entries(imageFiles)
+  .reverse()
+  .map(([path, file]) => ({ path, img: file.default }));
 ---
 
 <Layout title="Photography — Portfolio" showLogo={true}>
@@ -16,7 +18,7 @@ const imagesWithPaths = Object.entries(imageFiles).map(([path, file]) => ({ path
 
     <div class="masonry-grid">
       {imagesWithPaths.map(({ path, img }) => {
-        const isFeatured = path.includes('/03.');
+        const isFeatured = path.includes('/019.');
         return (
           <div class={`masonry-item ${isFeatured ? 'featured-item' : ''}`}>
             <Image src={img} alt="Photography piece" width={isFeatured ? 1200 : 600} data-full-src={img.src} />
@@ -194,7 +196,9 @@ const imagesWithPaths = Object.entries(imageFiles).map(([path, file]) => ({ path
     // Close on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('show')) {
-        closeModal();
+        closeModal();const imagesWithPaths = Object.entries(imageFiles)
+  .reverse()
+  .map(([path, file]) => ({ path, img: file.default }));
       }
     });
   }

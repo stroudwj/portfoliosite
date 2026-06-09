@@ -3,12 +3,56 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Bio — About Me" showLogo={true}>
-  <div style="padding: 180px 40px 40px; display: flex; flex-direction: column; align-items: center; gap: 24px;">
-    <p style="max-width: 500px; text-align: center; line-height: 1.6; text-wrap: pretty; margin: 0;">
-      William "Will" Stroud is a 22 year old passionate creative with a strong desire to create all things beautiful and share it with the world.
+  <div class="bio-container">
+    <p class="bio-text">
+Will Stroud<br />
+<br />
+<br />
+Born in Fairfax, Virginia <br />
+
+Lives and works in Harrisonburg, Virginia.<br />
+<br />
+Artist. Graphic Designer. Photographer. Student.<br />
+<br />
+william.stroud100@gmail.com<br /><br />
+<a href="/resume" class="resume-link">View Resume</a><br /><br />
+Site coded by Will Stroud
     </p>
-    <a href="mailto:william.stroud100@gmail.com" style="padding: 12px 24px; background-color: #000; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 500; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-      Get in Touch
-    </a>
   </div>
 </Layout>
+
+<style>
+  .bio-container {
+    padding: 25vh 0px 0px;
+    margin-left: 25vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    width: 33.333%;
+    min-width: 300px;
+    font-weight: 500;
+
+  }
+
+  .bio-text {
+    text-align: left;
+    line-height: 1.6;
+    text-wrap: pretty;
+    margin: 0;
+  }
+
+  .resume-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  @media (max-width: 900px) {
+    .bio-container {
+      margin-left: 0;
+      width: 100%;
+      max-width: 600px;
+    }
+  }
+</style>

@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import reachoutThumb from '../assets/graphic-design/reachout/thumbnails/thumbnail.jpg';
 import astroblocThumb from '../assets/graphic-design/astrobloc/thumbnails/thumbnail.jpg';
 import dailyPosterThumb from '../assets/graphic-design/daily-poster/thumbnails/thumbnail.jpg';
+import magazineThumb from '../assets/graphic-design/magazine/thumbnail/finalmagv2.jpg';
 import fliersThumb from '../assets/graphic-design/fliers/thumbnails/thumbnail.jpg';
 import miscellaneousThumb from '../assets/graphic-design/miscellaneous/thumbnails/thumbnail.png';
 ---
@@ -16,7 +17,6 @@ import miscellaneousThumb from '../assets/graphic-design/miscellaneous/thumbnail
       </div>
       <div class="project-info">
         <h2 class="project-title">Reachout</h2>
-        <p class="project-subtitle">View Project &rarr;</p>
       </div>
     </a>
     
@@ -26,7 +26,6 @@ import miscellaneousThumb from '../assets/graphic-design/miscellaneous/thumbnail
       </div>
       <div class="project-info">
         <h2 class="project-title">Astrobloc</h2>
-        <p class="project-subtitle">View Project &rarr;</p>
       </div>
     </a>
 
@@ -36,7 +35,15 @@ import miscellaneousThumb from '../assets/graphic-design/miscellaneous/thumbnail
       </div>
       <div class="project-info">
         <h2 class="project-title">Daily Poster</h2>
-        <p class="project-subtitle">View Project &rarr;</p>
+      </div>
+    </a>
+
+    <a href="/magazine" class="project-card">
+      <div class="project-image-placeholder">
+        <Image src={magazineThumb} alt="Magazine Thumbnail" />
+      </div>
+      <div class="project-info">
+        <h2 class="project-title">Magazine</h2>
       </div>
     </a>
 
@@ -46,7 +53,6 @@ import miscellaneousThumb from '../assets/graphic-design/miscellaneous/thumbnail
       </div>
       <div class="project-info">
         <h2 class="project-title">Fliers</h2>
-        <p class="project-subtitle">View Project &rarr;</p>
       </div>
     </a>
 
@@ -56,7 +62,6 @@ import miscellaneousThumb from '../assets/graphic-design/miscellaneous/thumbnail
       </div>
       <div class="project-info">
         <h2 class="project-title">Miscellaneous</h2>
-        <p class="project-subtitle">View Project &rarr;</p>
       </div>
     </a>
   </div>
@@ -129,13 +134,6 @@ import miscellaneousThumb from '../assets/graphic-design/miscellaneous/thumbnail
     font-size: 1.25rem;
     font-weight: 600;
     color: #000;
-  }
-
-  .project-subtitle {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #666;
-    font-weight: 500;
   }
 
   /* Responsive layout for smaller screens */

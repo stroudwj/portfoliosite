@@ -1,0 +1,231 @@
+---
+import Layout from '../layouts/Layout.astro';
+import resumeUrl from '../assets/bio/Will-Stroud-June-2026.pdf?url';
+---
+
+<Layout title="Resume — Will Stroud" showLogo={true}>
+  <div class="resume-page">
+    <div class="resume-actions">
+      <a href={resumeUrl} download="Will-Stroud-Resume.pdf" class="download-btn">
+        Download PDF Resume
+      </a>
+    </div>
+
+    <div class="resume-container">
+      <header class="resume-header">
+        <h1>Will Stroud</h1>
+        <h2>Graphic Design Student</h2>
+        <div class="contact-info">
+          <p>william.stroud100@gmail.com</p>
+          <p>(571)-320-5182</p>
+          <p>Portfolio: WillStroud.net</p>
+          <p>linkedin.com/in/willstroudnet</p>
+        </div>
+      </header>
+
+      <div class="resume-grid">
+        <div class="resume-main">
+          <section>
+            <h3>Goal</h3>
+            <p>My goal is to gain experience and provide value in the graphic design industry by interning for a reputable design company.</p>
+          </section>
+
+          <section>
+            <h3>Work Experience</h3>
+            
+            <div class="job">
+              <h4>Designer for Macrock</h4>
+              <p class="job-meta">Volunteer Part-Time</p>
+              <ul>
+                <li>Merchandise and Social Media Designer</li>
+                <li>Created social media posts & fliers that led to 100 attendees</li>
+                <li>Experience in "grunge" design aesthetic</li>
+              </ul>
+            </div>
+
+            <div class="job">
+              <h4>Designer & Social Media for James Madison University's Climbing Club</h4>
+              <p class="job-meta">Volunteer Part-Time</p>
+              <ul>
+                <li>Sold out 100 pieces of merchandise of my original designs. Including: hoodies, shirts, posters, and stickers</li>
+                <li>Increase club paid membership by 30% through social media advertisement also leading to 40 new members of our community.</li>
+                <li>Increased followers of social media from 800 to over 1000 followers.</li>
+                <li>Created posts with the most amount of likes to date on the Instagram page.</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <div class="resume-sidebar">
+          <section>
+            <h3>Education</h3>
+            <div class="edu">
+              <h4>James Madison University</h4>
+              <p>B.S. Graphic Design</p>
+              <p>Minor Computer Science</p>
+              <p>Current GPA: 3.6/4.0</p>
+              <p>Expected Spring 28'</p>
+            </div>
+          </section>
+
+          <section>
+            <h3>Skills</h3>
+            <ul class="skills-list">
+              <li>Photoshop</li>
+              <li>Illustrator</li>
+              <li>inDesign</li>
+              <li>Photography</li>
+              <li>Illustration</li>
+              <li>After Effects</li>
+              <li>Blender</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .resume-page {
+    padding: 120px 20px 60px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  .resume-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+  }
+
+  .download-btn {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+
+  .download-btn:hover {
+    opacity: 0.8;
+  }
+
+  .resume-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    color: #333;
+  }
+
+  .resume-header {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+
+  .resume-header h1 {
+    margin: 0 0 8px 0;
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: #000;
+  }
+
+  .resume-header h2 {
+    margin: 0 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #555;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .contact-info p {
+    margin: 0;
+  }
+
+  .resume-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+  }
+
+  @media (max-width: 600px) {
+    .resume-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  section {
+    margin-bottom: 32px;
+  }
+
+  h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+    color: #000;
+  }
+
+  .job {
+    margin-bottom: 24px;
+  }
+
+  .job h4 {
+    margin: 0 0 4px 0;
+    font-size: 1.1rem;
+    color: #222;
+  }
+
+  .job-meta {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  li {
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+
+  .edu h4 {
+    margin: 0 0 4px 0;
+    font-size: 1.05rem;
+    color: #222;
+  }
+
+  .edu p {
+    margin: 0 0 4px 0;
+    font-size: 0.95rem;
+  }
+
+  .skills-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .skills-list li {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+</style>

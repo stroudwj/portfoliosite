@@ -4,9 +4,9 @@ import { Image } from 'astro:assets';
 
 // Load images for the home page collage from the dedicated selected-works folder
 const selectedWorksFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/selected-works/*.{jpeg,jpg,png,gif,webp}', { eager: true });
-const collageImages = Object.values(selectedWorksFiles).map(file => file.default);
----
+const collageImages = Object.values(selectedWorksFiles).reverse().map(file => file.default);
 
+---
 <Layout title="Will Stroud" showLogo={true}>
   <div class="page-header">
     <h1 class="page-title">Selected Works</h1>
