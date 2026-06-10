@@ -1,24 +1,119 @@
 ---
 // Server-side logic: Astro grabs the current live URL path
 const currentPath = Astro.url.pathname;
+
+const navItems = [
+	{ href: '/', label: 'Home', paths: ['/'] },
+	{ href: '/art', label: 'Art', paths: ['/art', '/art/'] },
+	{ href: '/graphic-design', label: 'Graphic Design', paths: ['/graphic-design', '/graphic-design/'] },
+	{ href: '/photography', label: 'Photography', paths: ['/photography', '/photography/'] },
+	{ href: '/bio', label: 'About', paths: ['/bio', '/bio/'] },
+];
 ---
 
-<div class="mac-dock-vertical">
-  <!-- Dynamic template literals seamlessly apply the active underline class -->
-  <a href="/" class={`dock-link ${currentPath === '/' ? 'active' : ''}`}><span class="dock-item">Home</span></a>
-  <a href="/art" class={`dock-link ${currentPath === '/art' || currentPath === '/art/' ? 'active' : ''}`}><span class="dock-item">Art</span></a>
-  <a href="/graphic-design" class={`dock-link ${currentPath === '/graphic-design' || currentPath === '/graphic-design/' ? 'active' : ''}`}><span class="dock-item">Graphic Design</span></a>
-  <a href="/photography" class={`dock-link ${currentPath === '/photography' || currentPath === '/photography/' ? 'active' : ''}`}><span class="dock-item">Photography</span></a>
-  <a href="/bio" class={`dock-link ${currentPath === '/bio' || currentPath === '/bio/' ? 'active' : ''}`}><span class="dock-item">About</span></a>
+<div class="navigation-shell">
+  <div class="mac-dock-vertical desktop-nav">
+    {navItems.map((item) => (
+      <a href={item.href} class={`dock-link ${item.paths.includes(currentPath) ? 'active' : ''}`}>
+        <span class="dock-item">{item.label}</span>
+      </a>
+    ))}
+  </div>
+
+  <details class="mobile-nav">
+    <summary class="mobile-nav-trigger" aria-label="Open site navigation">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </summary>
+    <div class="mobile-nav-panel">
+      {navItems.map((item) => (
+        <a href={item.href} class={`mobile-nav-link ${item.paths.includes(currentPath) ? 'active' : ''}`}>
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </details>
 </div>
 
 <style>
+.navigation-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .mac-dock-vertical {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 5px 5px; /* top/bottom, left/right */
   background: transparent;
+}
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 2000;
+  background: transparent;
+  padding: 0;
+  width: fit-content;
+}
+
+.mobile-nav[open] {
+  background: #fafafa;
+  padding: 6px 8px 8px;
+}
+
+.mobile-nav-trigger {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px 4px;
+  background: transparent;
+  border: 0;
+}
+
+.mobile-nav-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.hamburger-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #000;
+  border-radius: 999px;
+}
+
+.mobile-nav-panel {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 4px 2px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  min-width: 120px;
+}
+
+.mobile-nav-link {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #111;
+  text-decoration: none;
+}
+
+.mobile-nav-link.active {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 
 .dock-link {
@@ -95,6 +190,16 @@ const currentPath = Astro.url.pathname;
   /* Active page stays underlined (overriding just in case) */
   .dock-link.active .dock-item::after { 
     transform: scaleX(1); 
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-nav {
+    display: block;
   }
 }
 </style>
