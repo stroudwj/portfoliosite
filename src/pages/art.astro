@@ -4,7 +4,9 @@ import { Image } from 'astro:assets';
 
 // Automatically import all images in the src/assets/art/ folder
 const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/art/*.{jpeg,jpg,png,gif,webp}', { eager: true });
-const images = Object.values(imageFiles).map(file => file.default);
+const images = Object.entries(imageFiles)
+  .sort(([a], [b]) => b.localeCompare(a)) // highest filename first
+  .map(([, file]) => file.default);
 ---
 
 <Layout title="Art — Portfolio" showLogo={true}>
